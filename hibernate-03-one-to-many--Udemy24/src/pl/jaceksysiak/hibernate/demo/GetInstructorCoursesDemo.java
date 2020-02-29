@@ -8,7 +8,8 @@ import pl.jaceksysiak.hibernate.demo.entity.Course;
 import pl.jaceksysiak.hibernate.demo.entity.Instructor;
 import pl.jaceksysiak.hibernate.demo.entity.InstructorDetail;
 
-public class CreateInstructorDemo {
+
+public class GetInstructorCoursesDemo {
 
 	public static void main(String[] args) {
 
@@ -25,23 +26,17 @@ public class CreateInstructorDemo {
 		
 		try {			
 			
-			// create the objects			
-			Instructor tempInstructor =  new Instructor("Susan", "Public", "susan.public@luv2code.com");
-			InstructorDetail tempInstructorDetail = new InstructorDetail("http://www.youtube.com", "Video Games");		
-			
-			// associate the objects
-			tempInstructor.setInstructorDetail(tempInstructorDetail);
-			
 			// start a transaction
 			session.beginTransaction();
 			
-			// save the instructor
-			//
-			// Note: this will ALSO save the details object
-			// because of CascadeType.ALL
-			//
-			System.out.println("Saving instructor: " + tempInstructor);
-			session.save(tempInstructor);					
+			// get the instructor from db
+			int theId = 1;
+			Instructor tempInstructor = session.get(Instructor.class, theId);		
+			
+			System.out.println("Instructor: " + tempInstructor);
+			
+			// get courses for the instructor
+			System.out.println("Courses: " + tempInstructor.getCourses());
 			
 			// commit transaction
 			session.getTransaction().commit();
